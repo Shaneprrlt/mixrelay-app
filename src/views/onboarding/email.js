@@ -57,7 +57,9 @@ class Email extends React.Component {
       </View>;
 
     return (
-      <View style={ViewStyle.root}>
+      <KeyboardAvoidingView
+        style={ViewStyle.root}
+        behavior={'padding'}>
         <TopNavigation left={primary} />
 
         <View style={{padding: 20}}>
@@ -66,7 +68,7 @@ class Email extends React.Component {
           <FormParagraph>your email can be used to login and helps us stay in touch</FormParagraph>
         </View>
 
-        <KeyboardAvoidingView style={{flex: 1}}>
+        <View>
           <View style={ViewStyle.form}>
             <View style={AppStyles.formGroup}>
               <Text style={AppStyles.formLabel}>email address</Text>
@@ -80,13 +82,13 @@ class Email extends React.Component {
             </View>
           </View>
 
-          <View style={{flex: 3}}>
+          <View style={{marginTop: 20}}>
             <Button
               onPress={this.submit}
               text={'continue'} />
           </View>
-        </KeyboardAvoidingView>
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -97,7 +99,6 @@ const ViewStyle = StyleSheet.create({
     backgroundColor: LIGHTGRAY
   },
   form: {
-    flex: 1
   },
   availableUsername: {
     position: 'absolute',

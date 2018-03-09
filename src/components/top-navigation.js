@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  Dimensions,
   View,
   Text,
   StyleSheet,
@@ -38,9 +39,22 @@ class TopNavigation extends React.Component {
   }
 }
 
+const isLargeDevice = () => {
+  const { height, width } = Dimensions.get('window');
+  return height > 667 && width >= 375;
+};
+
+const viewHeight = () => {
+  if(isLargeDevice()) {
+    return 125;
+  } else {
+    return 80;
+  }
+}
+
 const ViewStyle = StyleSheet.create({
   root: {
-    height: 125,
+    height: viewHeight(),
     backgroundColor: BLUE,
     flexDirection: 'column',
     justifyContent: 'flex-end'

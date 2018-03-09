@@ -4,10 +4,10 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableWithoutHighlight,
   TouchableOpacity,
   Keyboard,
-  TextInput,
-  KeyboardAvoidingView
+  TextInput
 } from 'react-native';
 
 import AppStyles, {
@@ -38,7 +38,7 @@ class PhoneNumber extends React.Component {
   submit() {
     const self = this;
     setTimeout(() => {
-
+      self.props.history.push('/onboarding/phone-verification-code');
     }, 1000)
   }
 
@@ -57,7 +57,7 @@ class PhoneNumber extends React.Component {
       </View>;
 
     return (
-      <View style={ViewStyle.root}>
+      <View style={ViewStyle.root} onResponderRelease={(evt) => {Keyboard.dismiss()}}>
         <TopNavigation left={primary} />
 
         <View style={{padding: 20}}>
@@ -66,7 +66,7 @@ class PhoneNumber extends React.Component {
           <FormParagraph>this helps us verify you’re a real person</FormParagraph>
         </View>
 
-        <KeyboardAvoidingView style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <View style={ViewStyle.form}>
             <View style={AppStyles.formGroup}>
               <Text style={AppStyles.formLabel}>phone number</Text>
@@ -90,12 +90,12 @@ class PhoneNumber extends React.Component {
             <FormParagraph style={{fontSize: 16}}>check out our privacy policy for more information</FormParagraph>
           </View>
 
-          <View style={{flex: 3}}>
+          <View style={{marginTop: 20}}>
             <Button
               onPress={this.submit}
               text={'send code'} />
           </View>
-        </KeyboardAvoidingView>
+        </View>
       </View>
     );
   }
@@ -107,7 +107,6 @@ const ViewStyle = StyleSheet.create({
     backgroundColor: LIGHTGRAY
   },
   form: {
-    flex: 1
   },
   availableUsername: {
     position: 'absolute',

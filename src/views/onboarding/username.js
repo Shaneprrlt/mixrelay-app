@@ -24,21 +24,26 @@ import Heading from '../../components/heading';
 import FormParagraph from '../../components/form-paragraph';
 import Button from '../../components/button';
 
-class Password extends React.Component {
+class Username extends React.Component {
   constructor(params) {
     super(params)
 
     this.submit = this.submit.bind(this)
 
     this.state = {
-      password: ''
+      username: '',
+      availableUsername: null
     }
   }
 
   submit() {
+    this.setState({
+      availableUsername: true
+    })
+
     const self = this;
     setTimeout(() => {
-      self.props.history.push('/onboarding/name');
+      self.props.history.push('/onboarding/password')
     }, 1000)
   }
 
@@ -71,35 +76,37 @@ class Password extends React.Component {
 
     return (
       <View style={ViewStyle.root}>
-        <TopNavigation left={primary} />
+        <TopNavigation
+          left={primary}
+          actionText={'login'}
+          action={() => {this.props.history.push('/login')}} />
 
         <View style={{padding: 20}}>
-          <Heading>pick a password</Heading>
+          <Heading>let's get started</Heading>
           <View style={{marginTop: 10}} />
-          <FormParagraph>passwords must be at least 8 characters long</FormParagraph>
+          <FormParagraph>pick a username, this is how people will find  you and how you’ll be seen in messages</FormParagraph>
         </View>
 
-        <KeyboardAvoidingView style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <View style={ViewStyle.form}>
             <View style={AppStyles.formGroup}>
-              <Text style={AppStyles.formLabel}>password</Text>
+              <Text style={AppStyles.formLabel}>username</Text>
               <TextInput
-                secureTextEntry={true}
                 autoFocus={true}
                 autoCapitalize={false}
-                placeholder={'password'}
-                onChangeText={(password) => {this.setState({password})}}
+                placeholder={'username'}
+                onChangeText={(username) => {this.setState({username})}}
                 style={AppStyles.formInput}/>
               {availbilityLabel}
             </View>
           </View>
 
-          <View style={{flex: 3}}>
+          <View style={{marginTop: 20}}>
             <Button
               onPress={this.submit}
               text={'continue'} />
           </View>
-        </KeyboardAvoidingView>
+        </View>
       </View>
     );
   }
@@ -111,7 +118,6 @@ const ViewStyle = StyleSheet.create({
     backgroundColor: LIGHTGRAY
   },
   form: {
-    flex: 1
   },
   availableUsername: {
     position: 'absolute',
@@ -124,4 +130,4 @@ const ViewStyle = StyleSheet.create({
   }
 });
 
-export default Password;
+export default Username;

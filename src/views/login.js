@@ -1,4 +1,9 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
+
+import {
+  login
+} from '../actions/login'
 
 import {
   View,
@@ -8,22 +13,23 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   TextInput
-} from 'react-native';
+} from 'react-native'
 
 import AppStyles, {
   BLUE,
   WHITE,
   LIGHTGRAY
-} from '../styles/app';
+} from '../styles/app'
 
-import Icon from '../styles/icons/icon';
+import Icon from '../styles/icons/icon'
 
-import TopNavigation from '../components/top-navigation';
-import Heading from '../components/heading';
-import FormParagraph from '../components/form-paragraph';
-import Button from '../components/button';
+import TopNavigation from '../components/top-navigation'
+import Heading from '../components/heading'
+import FormParagraph from '../components/form-paragraph'
+import Button from '../components/button'
 
 class Login extends React.Component {
+
   constructor(params) {
     super(params)
 
@@ -36,8 +42,15 @@ class Login extends React.Component {
     }
   }
 
-  submit() {
+  componentWillReceiveProps(props, nextProps) {
+    debugger;
+  }
 
+  submit() {
+    this.props.login(
+      this.state.username,
+      this.state.password
+    );
   }
 
   forgotPassword() {
@@ -60,6 +73,7 @@ class Login extends React.Component {
 
     return (
       <View style={ViewStyle.root}>
+
         <TopNavigation
           left={primary}
           action={() => {this.props.history.push('/onboarding/username')}}
@@ -70,7 +84,7 @@ class Login extends React.Component {
           <View style={{marginTop: 10}} />
         </View>
 
-        <KeyboardAvoidingView style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <View style={ViewStyle.form}>
             <View style={AppStyles.formGroup}>
               <Text style={AppStyles.formLabel}>username or email</Text>
@@ -91,14 +105,14 @@ class Login extends React.Component {
                 secureTextEntry={true}
                 style={AppStyles.formInput}/>
             </View>
-          </View>
 
-          <View style={{flex: 2}}>
-            <Button
-              onPress={this.submit}
-              text={'login'} />
+            <View style={{marginTop: 20}}>
+              <Button
+                onPress={this.submit}
+                text={'login'} />
+            </View>
           </View>
-        </KeyboardAvoidingView>
+        </View>
       </View>
     );
   }
@@ -114,4 +128,21 @@ const ViewStyle = StyleSheet.create({
   }
 });
 
-export default Login;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loginState: state.login
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (username, password) => {
+      dispatch(login(username, password))
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

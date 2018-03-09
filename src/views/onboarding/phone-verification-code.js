@@ -4,10 +4,10 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableWithoutHighlight,
   TouchableOpacity,
   Keyboard,
-  TextInput,
-  KeyboardAvoidingView
+  TextInput
 } from 'react-native';
 
 import AppStyles, {
@@ -24,22 +24,21 @@ import Heading from '../../components/heading';
 import FormParagraph from '../../components/form-paragraph';
 import Button from '../../components/button';
 
-class Name extends React.Component {
+class PhoneVerificationCode extends React.Component {
   constructor(params) {
     super(params)
 
     this.submit = this.submit.bind(this)
 
     this.state = {
-      firstName: '',
-      lastName: ''
+      code: ''
     }
   }
 
   submit() {
     const self = this;
     setTimeout(() => {
-      self.props.history.push('/onboarding/email');
+
     }, 1000)
   }
 
@@ -58,41 +57,39 @@ class Name extends React.Component {
       </View>;
 
     return (
-      <View style={ViewStyle.root}>
+      <View style={ViewStyle.root} onResponderRelease={(evt) => {Keyboard.dismiss()}}>
         <TopNavigation left={primary} />
 
         <View style={{padding: 20}}>
-          <Heading>what's your name?</Heading>
+          <Heading>enter verification code</Heading>
           <View style={{marginTop: 10}} />
         </View>
 
-        <KeyboardAvoidingView style={{flex: 3}}>
+        <View style={{flex: 1}}>
           <View style={ViewStyle.form}>
             <View style={AppStyles.formGroup}>
-              <Text style={AppStyles.formLabel}>first name</Text>
+              <Text style={AppStyles.formLabel}>verification code</Text>
               <TextInput
                 autoFocus={true}
-                autoCapitalize={true}
-                placeholder={'first name'}
-                onChangeText={(firstName) => {this.setState({firstName})}}
-                style={AppStyles.formInput}/>
-            </View>
-            <View style={AppStyles.formGroup}>
-              <Text style={AppStyles.formLabel}>last name</Text>
-              <TextInput
-                autoCapitalize={true}
-                placeholder={'last name'}
-                onChangeText={(lastName) => {this.setState({lastName})}}
+                autoCapitalize={false}
+                keyboardType={'numeric'}
+                placeholder={'code'}
+                onChangeText={(code) => {this.setState({code})}}
                 style={AppStyles.formInput}/>
             </View>
           </View>
 
-          <View style={{flex: 2}}>
+          <View style={{paddingLeft: 20, paddingRight: 20}}>
+            <View style={{marginTop: 10}} />
+            <FormParagraph style={{fontSize: 16}}>if you did not receive a verification code, click here to have it resent</FormParagraph>
+          </View>
+
+          <View style={{marginTop: 20}}>
             <Button
               onPress={this.submit}
               text={'continue'} />
           </View>
-        </KeyboardAvoidingView>
+        </View>
       </View>
     );
   }
@@ -104,7 +101,6 @@ const ViewStyle = StyleSheet.create({
     backgroundColor: LIGHTGRAY
   },
   form: {
-    flex: 1
   },
   availableUsername: {
     position: 'absolute',
@@ -117,4 +113,4 @@ const ViewStyle = StyleSheet.create({
   }
 });
 
-export default Name;
+export default PhoneVerificationCode;

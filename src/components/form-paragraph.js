@@ -12,11 +12,9 @@ import {
 class FormParagraph extends React.Component {
   render() {
 
-    let style = ViewStyle.root;
-
-
+    let style = [ViewStyle.root];
     if(this.props.style !== undefined && this.props.style !== null) {
-      style = Obect.assign({}, ViewStyle.root, this.props.style);
+      style = [ViewStyle.root, this.props.style];
     }
 
     return (

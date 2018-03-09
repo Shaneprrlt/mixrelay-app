@@ -22,10 +22,6 @@ class Home extends React.Component {
     this.onLoginClick = this.onLoginClick.bind(this)
     this.onSignUpClick = this.onSignUpClick.bind(this)
   }
-  //
-  // componentDidMount() {
-  //   this.props.history.push('/login');
-  // }
 
   onLoginClick() {
     this.props.history.push('/login')
@@ -40,7 +36,7 @@ class Home extends React.Component {
       <View style={ViewStyle.root}>
         <View style={ViewStyle.centeredContent}>
           <Image
-            source={require('../images/app-icon.png')}
+            source={require('../../images/app-icon.png')}
             style={ViewStyle.appIcon}/>
         </View>
         <View style={ViewStyle.centeredContent}>
