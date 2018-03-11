@@ -26,6 +26,8 @@ import {
   setEmailAddress
 } from '../../actions/onboarding'
 
+import UnauthenticatedView from '../helpers/unauthenticated-view'
+
 import Icon from '../../styles/icons/icon'
 
 import TopNavigation from '../../components/top-navigation'
@@ -65,43 +67,45 @@ class Email extends React.Component {
       </View>;
 
     return (
-      <View
-        style={ViewStyle.root}
-        behavior={'padding'}>
-        <TopNavigation left={primary} />
+      <UnauthenticatedView>
+        <View
+          style={ViewStyle.root}
+          behavior={'padding'}>
+          <TopNavigation left={primary} />
 
-        <KeyboardAwareScrollView>
+          <KeyboardAwareScrollView>
 
-          <View style={{padding: 20}}>
-            <Heading>what's your email address?</Heading>
-            <View style={{marginTop: 10}} />
-            <FormParagraph>your email can be used to login and helps us stay in touch</FormParagraph>
-          </View>
+            <View style={{padding: 20}}>
+              <Heading>what's your email address?</Heading>
+              <View style={{marginTop: 10}} />
+              <FormParagraph>your email can be used to login and helps us stay in touch</FormParagraph>
+            </View>
 
-          <View>
-            <View style={ViewStyle.form}>
-              <View style={AppStyles.formGroup}>
-                <Text style={AppStyles.formLabel}>email address</Text>
-                <TextInput
-                  value={this.state.emailAddress}
-                  autoFocus={true}
-                  autoCapitalize={'none'}
-                  keyboardType={'email-address'}
-                  placeholder={'email address'}
-                  onChangeText={(emailAddress) => {this.setState({emailAddress})}}
-                  style={AppStyles.formInput}/>
+            <View>
+              <View style={ViewStyle.form}>
+                <View style={AppStyles.formGroup}>
+                  <Text style={AppStyles.formLabel}>email address</Text>
+                  <TextInput
+                    value={this.state.emailAddress}
+                    autoFocus={true}
+                    autoCapitalize={'none'}
+                    keyboardType={'email-address'}
+                    placeholder={'email address'}
+                    onChangeText={(emailAddress) => {this.setState({emailAddress})}}
+                    style={AppStyles.formInput}/>
+                </View>
+              </View>
+
+              <View style={{marginTop: 20}}>
+                <Button
+                  onPress={this.submit}
+                  text={'continue'} />
               </View>
             </View>
 
-            <View style={{marginTop: 20}}>
-              <Button
-                onPress={this.submit}
-                text={'continue'} />
-            </View>
-          </View>
-
-        </KeyboardAwareScrollView>
-      </View>
+          </KeyboardAwareScrollView>
+        </View>
+      </UnauthenticatedView>
     );
   }
 }

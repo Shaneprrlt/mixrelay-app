@@ -15,6 +15,8 @@ import AppStyles, {
   WHITE
 } from '../styles/app';
 
+import UnauthenticatedView from './helpers/unauthenticated-view'
+
 class Home extends React.Component {
   constructor(params) {
     super(params)
@@ -33,34 +35,36 @@ class Home extends React.Component {
 
   render() {
     return (
-      <View style={ViewStyle.root}>
-        <View style={ViewStyle.centeredContent}>
-          <Image
-            source={require('../../images/app-icon.png')}
-            style={ViewStyle.appIcon}/>
-        </View>
-        <View style={ViewStyle.centeredContent}>
-          <Text style={ViewStyle.logo}>mixrelay</Text>
-        </View>
-        <View style={ViewStyle.centeredContent}>
-          <Text style={ViewStyle.sublogo}>good friends</Text>
-          <Text style={ViewStyle.sublogo}>fun plans</Text>
-        </View>
-        <View style={ViewStyle.centeredContent}>
-          <TouchableOpacity style={ViewStyle.cta} onPress={this.onLoginClick}>
-            <Text style={ViewStyle.ctaText}>login</Text>
-          </TouchableOpacity>
+      <UnauthenticatedView>
+        <View style={ViewStyle.root}>
+          <View style={ViewStyle.centeredContent}>
+            <Image
+              source={require('../../images/app-icon.png')}
+              style={ViewStyle.appIcon}/>
+          </View>
+          <View style={ViewStyle.centeredContent}>
+            <Text style={ViewStyle.logo}>mixrelay</Text>
+          </View>
+          <View style={ViewStyle.centeredContent}>
+            <Text style={ViewStyle.sublogo}>good friends</Text>
+            <Text style={ViewStyle.sublogo}>fun plans</Text>
+          </View>
+          <View style={ViewStyle.centeredContent}>
+            <TouchableOpacity style={ViewStyle.cta} onPress={this.onLoginClick}>
+              <Text style={ViewStyle.ctaText}>login</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={ViewStyle.cta} onPress={this.onSignUpClick}>
-            <Text style={ViewStyle.ctaText}>sign up</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={ViewStyle.cta} onPress={this.onSignUpClick}>
+              <Text style={ViewStyle.ctaText}>sign up</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={ViewStyle.centeredContent}>
+            <TouchableHighlight>
+              <Text style={ViewStyle.link}>privacy</Text>
+            </TouchableHighlight>
+          </View>
         </View>
-        <View style={ViewStyle.centeredContent}>
-          <TouchableHighlight>
-            <Text style={ViewStyle.link}>privacy</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
+      </UnauthenticatedView>
     );
   }
 }

@@ -15,6 +15,8 @@ import {
   KeyboardAwareScrollView
 } from 'react-native-keyboard-aware-scroll-view'
 
+import UnauthenticatedView from '../helpers/unauthenticated-view'
+
 import AppStyles, {
   BLUE,
   WHITE,
@@ -67,50 +69,52 @@ class Name extends React.Component {
       </View>;
 
     return (
-      <View style={ViewStyle.root}>
-        <TopNavigation left={primary} />
+      <UnauthenticatedView>
+        <View style={ViewStyle.root}>
+          <TopNavigation left={primary} />
 
-        <KeyboardAwareScrollView>
+          <KeyboardAwareScrollView>
 
-          <View style={{padding: 20}}>
-            <Heading>what's your name?</Heading>
-            <View style={{marginTop: 10}} />
-          </View>
+            <View style={{padding: 20}}>
+              <Heading>what's your name?</Heading>
+              <View style={{marginTop: 10}} />
+            </View>
 
-          <View>
-            <View style={ViewStyle.form}>
-              <View style={AppStyles.formGroup}>
-                <Text style={AppStyles.formLabel}>first name</Text>
-                <TextInput
-                  value={this.state.firstName}
-                  autoFocus={true}
-                  autoCorrect={false}
-                  autoCapitalize={'words'}
-                  placeholder={'first name'}
-                  onChangeText={(firstName) => {this.setState({firstName})}}
-                  style={AppStyles.formInput}/>
+            <View>
+              <View style={ViewStyle.form}>
+                <View style={AppStyles.formGroup}>
+                  <Text style={AppStyles.formLabel}>first name</Text>
+                  <TextInput
+                    value={this.state.firstName}
+                    autoFocus={true}
+                    autoCorrect={false}
+                    autoCapitalize={'words'}
+                    placeholder={'first name'}
+                    onChangeText={(firstName) => {this.setState({firstName})}}
+                    style={AppStyles.formInput}/>
+                </View>
+                <View style={AppStyles.formGroup}>
+                  <Text style={AppStyles.formLabel}>last name</Text>
+                  <TextInput
+                    value={this.state.lastName}
+                    autoCorrect={false}
+                    autoCapitalize={'words'}
+                    placeholder={'last name'}
+                    onChangeText={(lastName) => {this.setState({lastName})}}
+                    style={AppStyles.formInput}/>
+                </View>
               </View>
-              <View style={AppStyles.formGroup}>
-                <Text style={AppStyles.formLabel}>last name</Text>
-                <TextInput
-                  value={this.state.lastName}
-                  autoCorrect={false}
-                  autoCapitalize={'words'}
-                  placeholder={'last name'}
-                  onChangeText={(lastName) => {this.setState({lastName})}}
-                  style={AppStyles.formInput}/>
+
+              <View style={{marginTop: 20}}>
+                <Button
+                  onPress={this.submit}
+                  text={'continue'} />
               </View>
             </View>
 
-            <View style={{marginTop: 20}}>
-              <Button
-                onPress={this.submit}
-                text={'continue'} />
-            </View>
-          </View>
-
-        </KeyboardAwareScrollView>
-      </View>
+          </KeyboardAwareScrollView>
+        </View>
+      </UnauthenticatedView>
     );
   }
 }

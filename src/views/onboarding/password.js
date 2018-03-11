@@ -17,6 +17,8 @@ import {
 
 import { setPassword } from '../../actions/onboarding'
 
+import UnauthenticatedView from '../helpers/unauthenticated-view'
+
 import AppStyles, {
   BLUE,
   WHITE,
@@ -63,41 +65,43 @@ class Password extends React.Component {
       </View>;
 
     return (
-      <View style={ViewStyle.root}>
-        <TopNavigation left={primary} />
+      <UnauthenticatedView>
+        <View style={ViewStyle.root}>
+          <TopNavigation left={primary} />
 
-        <KeyboardAwareScrollView>
+          <KeyboardAwareScrollView>
 
-          <View style={{padding: 20}}>
-            <Heading>pick a password</Heading>
-            <View style={{marginTop: 10}} />
-            <FormParagraph>passwords must be at least 8 characters long</FormParagraph>
-          </View>
+            <View style={{padding: 20}}>
+              <Heading>pick a password</Heading>
+              <View style={{marginTop: 10}} />
+              <FormParagraph>passwords must be at least 8 characters long</FormParagraph>
+            </View>
 
-          <View style={{flex: 1}}>
-            <View style={ViewStyle.form}>
-              <View style={AppStyles.formGroup}>
-                <Text style={AppStyles.formLabel}>password</Text>
-                <TextInput
-                  value={this.state.password}
-                  secureTextEntry={true}
-                  autoFocus={true}
-                  autoCapitalize={'none'}
-                  placeholder={'password'}
-                  onChangeText={(password) => {this.setState({password})}}
-                  style={AppStyles.formInput}/>
+            <View style={{flex: 1}}>
+              <View style={ViewStyle.form}>
+                <View style={AppStyles.formGroup}>
+                  <Text style={AppStyles.formLabel}>password</Text>
+                  <TextInput
+                    value={this.state.password}
+                    secureTextEntry={true}
+                    autoFocus={true}
+                    autoCapitalize={'none'}
+                    placeholder={'password'}
+                    onChangeText={(password) => {this.setState({password})}}
+                    style={AppStyles.formInput}/>
+                </View>
+              </View>
+
+              <View style={{marginTop: 20}}>
+                <Button
+                  onPress={this.submit}
+                  text={'continue'} />
               </View>
             </View>
 
-            <View style={{marginTop: 20}}>
-              <Button
-                onPress={this.submit}
-                text={'continue'} />
-            </View>
-          </View>
-
-        </KeyboardAwareScrollView>
-      </View>
+          </KeyboardAwareScrollView>
+        </View>
+      </UnauthenticatedView>
     );
   }
 }

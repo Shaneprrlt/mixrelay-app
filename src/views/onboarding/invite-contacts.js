@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Contacts from 'react-native-contacts'
 
 import {
   View,
@@ -12,6 +13,8 @@ import {
   ScrollView
 } from 'react-native'
 
+import UnauthenticatedView from '../helpers/unauthenticated-view'
+
 import AppStyles, {
   BLUE,
   WHITE,
@@ -20,7 +23,7 @@ import AppStyles, {
 } from '../../styles/app'
 
 import {
-  setEmailAddress
+  createAccount
 } from '../../actions/onboarding'
 
 import Icon from '../../styles/icons/icon'
@@ -34,6 +37,7 @@ class InviteContacts extends React.Component {
   constructor(params) {
     super(params)
 
+    this.skip = this.skip.bind(this)
     this.submit = this.submit.bind(this)
 
     this.state = {
@@ -41,12 +45,28 @@ class InviteContacts extends React.Component {
     }
   }
 
-  submit() {
-    if(this.state.emailAddress && this.state.emailAddress.trim() !== '') {
-      this.props.setEmailAddress(this.state.emailAddress, '/onboarding/phone-number')
-    } else {
-      alert('Enter an email address')
+  componentDidMount() {
+    const self = this;
+    Contacts.getAll((err, contacts) => {
+      if(err == 'denied') {
+        self.props.createAccount(self.props.onboardingState)
+      } else {
+
+      }
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.onboardingState.errors.length > 0) {
+      alert(nextProps.onboardingState.errors.join('. '))
     }
+  }
+
+  skip() {
+    this.props.createAccount(this.props.onboardingState)
+  }
+
+  submit() {
   }
 
   render() {
@@ -56,25 +76,30 @@ class InviteContacts extends React.Component {
         <TouchableOpacity style={AppStyles.topNavigationPrimary} onPress={() => {this.props.history.goBack()}}>
           <View style={AppStyles.topNavigationContainer}>
             <Icon name='ChevronLeft' />
-            <Text style={AppStyles.topNavigationPrimaryText}>sign up</Text>
+            <Text style={AppStyles.topNavigationPrimaryText}>add friends</Text>
           </View>
         </TouchableOpacity>
       </View>;
 
     return (
-      <View
-        style={ViewStyle.root}
-        behavior={'padding'}>
-        <TopNavigation left={primary} />
+      <UnauthenticatedView>
+        <View
+          style={ViewStyle.root}
+          behavior={'padding'}>
+          <TopNavigation
+            left={primary}
+            action={this.skip}
+            actionText={'skip'} />
 
-        <ScrollView>
+          <ScrollView>
 
-          <View style={{padding: 20}}>
-            <Heading>add some friends</Heading>
-          </View>
+            <View style={{padding: 20}}>
+              <Heading>add some friends</Heading>
+            </View>
 
-        </ScrollView>
-      </View>
+          </ScrollView>
+        </View>
+      </UnauthenticatedView>
     );
   }
 }
@@ -96,7 +121,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    createAccount(onboardingState) {
+      dispatch(createAccount(onboardingState, '/plans'))
+    }
   }
 }
 

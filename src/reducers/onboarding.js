@@ -47,6 +47,16 @@ export default (state=initialState.onboarding, action) => {
         phoneNumberVerified: true,
         errors: []
       }
+    case types.CREATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        errors: []
+      }
+    case types.CREATE_ACCOUNT_ERROR:
+      return {
+        ...state,
+        errors: action.errors
+      }
     default:
       return state
   }

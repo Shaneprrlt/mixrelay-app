@@ -28,7 +28,7 @@ class Api {
 
   // Users
 
-  createUser(userData={}) {
+  createAccount(userData={}) {
     return this.post('users', userData);
   }
 

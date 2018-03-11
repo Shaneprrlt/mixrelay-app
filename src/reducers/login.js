@@ -8,7 +8,7 @@ export default (state=initialState.login, action) => {
       return {
         ...state,
         user: action.user,
-        accessToken: action.user.accessToken,
+        accessToken: action.user.token,
         loggedInAt: moment().unix()
       }
     case types.LOGIN_ERROR:
@@ -17,6 +17,13 @@ export default (state=initialState.login, action) => {
         user: {},
         accessToken: null,
         errors: action.errors
+      }
+    case types.CREATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        user: action.user,
+        accessToken: action.user.token,
+        loggedInAt: moment().unix()
       }
     default:
       return state

@@ -19,6 +19,8 @@ import {
   KeyboardAwareScrollView
 } from 'react-native-keyboard-aware-scroll-view'
 
+import UnauthenticatedView from '../helpers/unauthenticated-view'
+
 import AppStyles, {
   BLUE,
   WHITE,
@@ -67,51 +69,53 @@ class PhoneNumber extends React.Component {
       </View>;
 
     return (
-      <View style={ViewStyle.root} onResponderRelease={(evt) => {Keyboard.dismiss()}}>
-        <TopNavigation left={primary} />
+      <UnauthenticatedView>
+        <View style={ViewStyle.root} onResponderRelease={(evt) => {Keyboard.dismiss()}}>
+          <TopNavigation left={primary} />
 
-        <KeyboardAwareScrollView>
+          <KeyboardAwareScrollView>
 
-          <View style={{padding: 20}}>
-            <Heading>verify your phone #</Heading>
-            <View style={{marginTop: 10}} />
-            <FormParagraph>this helps us verify you’re a real person</FormParagraph>
-          </View>
+            <View style={{padding: 20}}>
+              <Heading>verify your phone #</Heading>
+              <View style={{marginTop: 10}} />
+              <FormParagraph>this helps us verify you’re a real person</FormParagraph>
+            </View>
 
-          <View style={{flex: 1}}>
-            <View style={ViewStyle.form}>
-              <View style={AppStyles.formGroup}>
-                <Text style={AppStyles.formLabel}>phone number</Text>
-                <TextInput
-                  value={this.state.phoneNumber}
-                  autoFocus={true}
-                  autoCapitalize={'none'}
-                  keyboardType={'numeric'}
-                  placeholder={'+1'}
-                  onChangeText={(phoneNumber) => {this.setState({phoneNumber})}}
-                  style={AppStyles.formInput}/>
+            <View style={{flex: 1}}>
+              <View style={ViewStyle.form}>
+                <View style={AppStyles.formGroup}>
+                  <Text style={AppStyles.formLabel}>phone number</Text>
+                  <TextInput
+                    value={this.state.phoneNumber}
+                    autoFocus={true}
+                    autoCapitalize={'none'}
+                    keyboardType={'numeric'}
+                    placeholder={'+1'}
+                    onChangeText={(phoneNumber) => {this.setState({phoneNumber})}}
+                    style={AppStyles.formInput}/>
+                </View>
+              </View>
+
+              <View style={{paddingLeft: 20, paddingRight: 20}}>
+                <View style={{marginTop: 10}} />
+                <FormParagraph style={{fontSize: 16}}>your phone number won’t be seen by other mixrelay users</FormParagraph>
+              </View>
+
+              <View style={{paddingLeft: 20, paddingRight: 20}}>
+                <View style={{marginTop: 10}} />
+                <FormParagraph style={{fontSize: 16}}>check out our privacy policy for more information</FormParagraph>
+              </View>
+
+              <View style={{marginTop: 20}}>
+                <Button
+                  onPress={this.submit}
+                  text={'send code'} />
               </View>
             </View>
 
-            <View style={{paddingLeft: 20, paddingRight: 20}}>
-              <View style={{marginTop: 10}} />
-              <FormParagraph style={{fontSize: 16}}>your phone number won’t be seen by other mixrelay users</FormParagraph>
-            </View>
-
-            <View style={{paddingLeft: 20, paddingRight: 20}}>
-              <View style={{marginTop: 10}} />
-              <FormParagraph style={{fontSize: 16}}>check out our privacy policy for more information</FormParagraph>
-            </View>
-
-            <View style={{marginTop: 20}}>
-              <Button
-                onPress={this.submit}
-                text={'send code'} />
-            </View>
-          </View>
-
-        </KeyboardAwareScrollView>
-      </View>
+          </KeyboardAwareScrollView>
+        </View>
+      </UnauthenticatedView>
     );
   }
 }

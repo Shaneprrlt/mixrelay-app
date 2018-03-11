@@ -80,3 +80,62 @@ export const setPhoneNumberVerified = (nextRoute=null) => {
     }
   }
 }
+
+const createAccountSuccess = (user) => {
+  return {
+    type: types.CREATE_ACCOUNT_SUCCESS,
+    user: user
+  }
+}
+
+const createAccountError = (errors) => {
+  return {
+    type: types.CREATE_ACCOUNT_ERROR,
+    errors: errors
+  }
+}
+
+export const createAccount = (onboardingState, nextRoute=null) => {
+  return async (dispatch) => {
+    try {
+      const payload = {
+        user: {
+          username: onboardingState.username,
+          password: onboardingState.password,
+          email: onboardingState.emailAddress,
+          firstName: onboardingState.firstName,
+          lastName: onboardingState.lastName,
+          phoneNumber: onboardingState.phoneNumber,
+          phoneVerified: onboardingState.phoneNumberVerified
+        }
+      }
+      let responsePayload = await api.createAccount(payload)
+      dispatch(createAccountSuccess(responsePayload.user))
+      dispatch(push(nextRoute))
+    } catch (e) {
+      dispatch(createAccountError(e))
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///

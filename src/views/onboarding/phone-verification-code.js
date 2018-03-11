@@ -15,6 +15,8 @@ import {
   KeyboardAwareScrollView
 } from 'react-native-keyboard-aware-scroll-view'
 
+import UnauthenticatedView from '../helpers/unauthenticated-view'
+
 import AppStyles, {
   BLUE,
   WHITE,
@@ -72,42 +74,44 @@ class PhoneVerificationCode extends React.Component {
       </View>;
 
     return (
-      <View style={ViewStyle.root} onResponderRelease={(evt) => {Keyboard.dismiss()}}>
-        <TopNavigation left={primary} />
+      <UnauthenticatedView>
+        <View style={ViewStyle.root} onResponderRelease={(evt) => {Keyboard.dismiss()}}>
+          <TopNavigation left={primary} />
 
-        <KeyboardAwareScrollView>
-          <View style={{padding: 20}}>
-            <Heading>enter verification code</Heading>
-            <View style={{marginTop: 10}} />
-          </View>
+          <KeyboardAwareScrollView>
+            <View style={{padding: 20}}>
+              <Heading>enter verification code</Heading>
+              <View style={{marginTop: 10}} />
+            </View>
 
-          <View style={{flex: 1}}>
-            <View style={ViewStyle.form}>
-              <View style={AppStyles.formGroup}>
-                <Text style={AppStyles.formLabel}>verification code</Text>
-                <TextInput
-                  autoFocus={true}
-                  autoCapitalize={'none'}
-                  keyboardType={'numeric'}
-                  placeholder={'code'}
-                  onChangeText={(code) => {this.setState({code})}}
-                  style={AppStyles.formInput}/>
+            <View style={{flex: 1}}>
+              <View style={ViewStyle.form}>
+                <View style={AppStyles.formGroup}>
+                  <Text style={AppStyles.formLabel}>verification code</Text>
+                  <TextInput
+                    autoFocus={true}
+                    autoCapitalize={'none'}
+                    keyboardType={'numeric'}
+                    placeholder={'code'}
+                    onChangeText={(code) => {this.setState({code})}}
+                    style={AppStyles.formInput}/>
+                </View>
+              </View>
+
+              <View style={{paddingLeft: 20, paddingRight: 20}}>
+                <View style={{marginTop: 10}} />
+                <FormParagraph style={{fontSize: 16}}>if you did not receive a verification code, click here to have it resent</FormParagraph>
+              </View>
+
+              <View style={{marginTop: 20}}>
+                <Button
+                  onPress={this.submit}
+                  text={'continue'} />
               </View>
             </View>
-
-            <View style={{paddingLeft: 20, paddingRight: 20}}>
-              <View style={{marginTop: 10}} />
-              <FormParagraph style={{fontSize: 16}}>if you did not receive a verification code, click here to have it resent</FormParagraph>
-            </View>
-
-            <View style={{marginTop: 20}}>
-              <Button
-                onPress={this.submit}
-                text={'continue'} />
-            </View>
-          </View>
-        </KeyboardAwareScrollView>
-      </View>
+          </KeyboardAwareScrollView>
+        </View>
+      </UnauthenticatedView>
     );
   }
 }
