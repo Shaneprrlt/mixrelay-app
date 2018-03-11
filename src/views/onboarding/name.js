@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
 
 import {
   View,
@@ -8,21 +9,29 @@ import {
   Keyboard,
   TextInput,
   KeyboardAvoidingView
-} from 'react-native';
+} from 'react-native'
+
+import {
+  KeyboardAwareScrollView
+} from 'react-native-keyboard-aware-scroll-view'
 
 import AppStyles, {
   BLUE,
   WHITE,
   DARKGREEN,
   LIGHTGRAY
-} from '../../styles/app';
+} from '../../styles/app'
 
-import Icon from '../../styles/icons/icon';
+import {
+  setName
+} from '../../actions/onboarding'
 
-import TopNavigation from '../../components/top-navigation';
-import Heading from '../../components/heading';
-import FormParagraph from '../../components/form-paragraph';
-import Button from '../../components/button';
+import Icon from '../../styles/icons/icon'
+
+import TopNavigation from '../../components/top-navigation'
+import Heading from '../../components/heading'
+import FormParagraph from '../../components/form-paragraph'
+import Button from '../../components/button'
 
 class Name extends React.Component {
   constructor(params) {
@@ -31,16 +40,18 @@ class Name extends React.Component {
     this.submit = this.submit.bind(this)
 
     this.state = {
-      firstName: '',
-      lastName: ''
+      firstName: this.props.onboardingState.firstName,
+      lastName: this.props.onboardingState.lastName
     }
   }
 
   submit() {
-    const self = this;
-    setTimeout(() => {
-      self.props.history.push('/onboarding/email');
-    }, 1000)
+    if(this.state.firstName && this.state.firstName.trim() !== '' &&
+      this.state.lastName && this.state.lastName.trim() !== '') {
+        this.props.setName(this.state.firstName, this.state.lastName, '/onboarding/email')
+      } else {
+        alert('Enter first and last name')
+      }
   }
 
   render() {
@@ -49,9 +60,7 @@ class Name extends React.Component {
       <View>
         <TouchableOpacity style={AppStyles.topNavigationPrimary} onPress={() => {this.props.history.goBack()}}>
           <View style={AppStyles.topNavigationContainer}>
-            <Icon
-              name='ChevronLeft'
-              style={AppStyles.topNavigationPrimaryIcon} />
+            <Icon name='ChevronLeft' />
             <Text style={AppStyles.topNavigationPrimaryText}>sign up</Text>
           </View>
         </TouchableOpacity>
@@ -61,38 +70,46 @@ class Name extends React.Component {
       <View style={ViewStyle.root}>
         <TopNavigation left={primary} />
 
-        <View style={{padding: 20}}>
-          <Heading>what's your name?</Heading>
-          <View style={{marginTop: 10}} />
-        </View>
+        <KeyboardAwareScrollView>
 
-        <View>
-          <View style={ViewStyle.form}>
-            <View style={AppStyles.formGroup}>
-              <Text style={AppStyles.formLabel}>first name</Text>
-              <TextInput
-                autoFocus={true}
-                autoCapitalize={true}
-                placeholder={'first name'}
-                onChangeText={(firstName) => {this.setState({firstName})}}
-                style={AppStyles.formInput}/>
+          <View style={{padding: 20}}>
+            <Heading>what's your name?</Heading>
+            <View style={{marginTop: 10}} />
+          </View>
+
+          <View>
+            <View style={ViewStyle.form}>
+              <View style={AppStyles.formGroup}>
+                <Text style={AppStyles.formLabel}>first name</Text>
+                <TextInput
+                  value={this.state.firstName}
+                  autoFocus={true}
+                  autoCorrect={false}
+                  autoCapitalize={'words'}
+                  placeholder={'first name'}
+                  onChangeText={(firstName) => {this.setState({firstName})}}
+                  style={AppStyles.formInput}/>
+              </View>
+              <View style={AppStyles.formGroup}>
+                <Text style={AppStyles.formLabel}>last name</Text>
+                <TextInput
+                  value={this.state.lastName}
+                  autoCorrect={false}
+                  autoCapitalize={'words'}
+                  placeholder={'last name'}
+                  onChangeText={(lastName) => {this.setState({lastName})}}
+                  style={AppStyles.formInput}/>
+              </View>
             </View>
-            <View style={AppStyles.formGroup}>
-              <Text style={AppStyles.formLabel}>last name</Text>
-              <TextInput
-                autoCapitalize={true}
-                placeholder={'last name'}
-                onChangeText={(lastName) => {this.setState({lastName})}}
-                style={AppStyles.formInput}/>
+
+            <View style={{marginTop: 20}}>
+              <Button
+                onPress={this.submit}
+                text={'continue'} />
             </View>
           </View>
 
-          <View style={{marginTop: 20}}>
-            <Button
-              onPress={this.submit}
-              text={'continue'} />
-          </View>
-        </View>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
@@ -104,16 +121,24 @@ const ViewStyle = StyleSheet.create({
     backgroundColor: LIGHTGRAY
   },
   form: {
-  },
-  availableUsername: {
-    position: 'absolute',
-    right: 20,
-    top: 56,
-    fontFamily: 'Avenir Next',
-    fontWeight: '500',
-    fontSize: 18,
-    color: DARKGREEN
   }
 });
 
-export default Name;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    onboardingState: state.onboarding
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setName: (firstName, lastName, nextRoute) => {
+      dispatch(setName(firstName, lastName, nextRoute))
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Name);

@@ -1,11 +1,12 @@
 const initialState = {
   onboarding: {
-    username: null,
-    password: null,
-    firstName: null,
-    lastName: null,
-    email: null,
-    phoneNumber: null,
+    username: '',
+    availableUsername: null,
+    password: '',
+    firstName: '',
+    lastName: '',
+    emailAddress: '',
+    phoneNumber: '',
     phoneNumberVerified: false,
     errors: []
   },

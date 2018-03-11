@@ -8,12 +8,9 @@ import {
   TouchableOpacity,
   Keyboard,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ScrollView
 } from 'react-native'
-
-import {
-  KeyboardAwareScrollView
-} from 'react-native-keyboard-aware-scroll-view'
 
 import AppStyles, {
   BLUE,
@@ -33,7 +30,7 @@ import Heading from '../../components/heading'
 import FormParagraph from '../../components/form-paragraph'
 import Button from '../../components/button'
 
-class Email extends React.Component {
+class InviteContacts extends React.Component {
   constructor(params) {
     super(params)
 
@@ -70,37 +67,13 @@ class Email extends React.Component {
         behavior={'padding'}>
         <TopNavigation left={primary} />
 
-        <KeyboardAwareScrollView>
+        <ScrollView>
 
           <View style={{padding: 20}}>
-            <Heading>what's your email address?</Heading>
-            <View style={{marginTop: 10}} />
-            <FormParagraph>your email can be used to login and helps us stay in touch</FormParagraph>
+            <Heading>add some friends</Heading>
           </View>
 
-          <View>
-            <View style={ViewStyle.form}>
-              <View style={AppStyles.formGroup}>
-                <Text style={AppStyles.formLabel}>email address</Text>
-                <TextInput
-                  value={this.state.emailAddress}
-                  autoFocus={true}
-                  autoCapitalize={'none'}
-                  keyboardType={'email-address'}
-                  placeholder={'email address'}
-                  onChangeText={(emailAddress) => {this.setState({emailAddress})}}
-                  style={AppStyles.formInput}/>
-              </View>
-            </View>
-
-            <View style={{marginTop: 20}}>
-              <Button
-                onPress={this.submit}
-                text={'continue'} />
-            </View>
-          </View>
-
-        </KeyboardAwareScrollView>
+        </ScrollView>
       </View>
     );
   }
@@ -123,13 +96,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setEmailAddress: (emailAddress, nextRoute) => {
-      dispatch(setEmailAddress(emailAddress, nextRoute))
-    }
+
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Email);
+)(InviteContacts);

@@ -15,6 +15,10 @@ import {
   TextInput
 } from 'react-native'
 
+import {
+  KeyboardAwareScrollView
+} from 'react-native-keyboard-aware-scroll-view'
+
 import AppStyles, {
   BLUE,
   WHITE,
@@ -42,10 +46,6 @@ class Login extends React.Component {
     }
   }
 
-  componentWillReceiveProps(props, nextProps) {
-    debugger;
-  }
-
   submit() {
     this.props.login(
       this.state.username,
@@ -63,9 +63,7 @@ class Login extends React.Component {
       <View>
         <TouchableOpacity style={AppStyles.topNavigationPrimary} onPress={() => {this.props.history.goBack()}}>
           <View style={AppStyles.topNavigationContainer}>
-            <Icon
-              name='ChevronLeft'
-              style={AppStyles.topNavigationPrimaryIcon} />
+            <Icon name='ChevronLeft' />
             <Text style={AppStyles.topNavigationPrimaryText}>login</Text>
           </View>
         </TouchableOpacity>
@@ -79,40 +77,43 @@ class Login extends React.Component {
           action={() => {this.props.history.push('/onboarding/username')}}
           actionText={'sign up'}/>
 
-        <View style={{padding: 20}}>
-          <Heading>welcome back ✌️</Heading>
-          <View style={{marginTop: 10}} />
-        </View>
+        <KeyboardAwareScrollView>
 
-        <View style={{flex: 1}}>
-          <View style={ViewStyle.form}>
-            <View style={AppStyles.formGroup}>
-              <Text style={AppStyles.formLabel}>username or email</Text>
-              <TextInput
-                autoFocus={true}
-                autoCapitalize={false}
-                placeholder={'username or email'}
-                onChangeText={(username) => {this.setState({username})}}
-                style={AppStyles.formInput}/>
-            </View>
+          <View style={{padding: 20}}>
+            <Heading>welcome back ✌️</Heading>
+            <View style={{marginTop: 10}} />
+          </View>
 
-            <View style={AppStyles.formGroup}>
-              <Text style={AppStyles.formLabel}>password</Text>
-              <TextInput
-                autoCapitalize={false}
-                placeholder={'password'}
-                onChangeText={(password) => {this.setState({password})}}
-                secureTextEntry={true}
-                style={AppStyles.formInput}/>
-            </View>
+          <View style={{flex: 1}}>
+            <View style={ViewStyle.form}>
+              <View style={AppStyles.formGroup}>
+                <Text style={AppStyles.formLabel}>username or email</Text>
+                <TextInput
+                  autoFocus={true}
+                  autoCapitalize={false}
+                  placeholder={'username or email'}
+                  onChangeText={(username) => {this.setState({username})}}
+                  style={AppStyles.formInput}/>
+              </View>
 
-            <View style={{marginTop: 20}}>
-              <Button
-                onPress={this.submit}
-                text={'login'} />
+              <View style={AppStyles.formGroup}>
+                <Text style={AppStyles.formLabel}>password</Text>
+                <TextInput
+                  autoCapitalize={false}
+                  placeholder={'password'}
+                  onChangeText={(password) => {this.setState({password})}}
+                  secureTextEntry={true}
+                  style={AppStyles.formInput}/>
+              </View>
+
+              <View style={{marginTop: 20}}>
+                <Button
+                  onPress={this.submit}
+                  text={'login'} />
+              </View>
             </View>
           </View>
-        </View>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
@@ -131,7 +132,7 @@ const ViewStyle = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
   return {
     loginState: state.login
-  };
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

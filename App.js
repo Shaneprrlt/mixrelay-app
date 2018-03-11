@@ -1,18 +1,16 @@
-import React from 'react';
+import React from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
-import configureStore from './src/store/store';
+import configureStore from './src/store/store'
 
-const { store, persistor } = configureStore();
+const { store, persistor, history } = configureStore();
 
 import {
   View
 } from 'react-native';
 
-import {
-  NativeRouter,
-  Route
-} from 'react-router-native';
+import { Route } from 'react-router-native'
+import { ConnectedRouter } from 'react-router-redux'
 
 // Home
 import Home from './src/views/home';
@@ -25,9 +23,7 @@ import OnboardingName from './src/views/onboarding/name';
 import OnboardingEmail from './src/views/onboarding/email';
 import OnboardingPhoneNumber from './src/views/onboarding/phone-number';
 import OnboardingPhoneVerificationCode from './src/views/onboarding/phone-verification-code';
-
-console.log(store);
-console.log(persistor);
+import OnboardingInviteContacts from './src/views/onboarding/invite-contacts';
 
 const App = () => (
   <Provider store={store}>
@@ -35,7 +31,7 @@ const App = () => (
       loading={null}
       persistor={persistor}
       onBeforeLift={() => {}}>
-      <NativeRouter>
+      <ConnectedRouter history={history}>
         <View style={{flex: 1}}>
           <Route exact path={'/'} component={Home} />
           <Route exact path={'/login'} component={Login} />
@@ -45,8 +41,9 @@ const App = () => (
           <Route exact path={'/onboarding/email'} component={OnboardingEmail} />
           <Route exact path={'/onboarding/phone-number'} component={OnboardingPhoneNumber} />
           <Route exact path={'/onboarding/phone-verification-code'} component={OnboardingPhoneVerificationCode} />
+          <Route exact path={'/onboarding/invite-contacts'} component={OnboardingInviteContacts} />
         </View>
-      </NativeRouter>
+      </ConnectedRouter>
     </PersistGate>
   </Provider>
 );

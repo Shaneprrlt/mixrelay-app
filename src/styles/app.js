@@ -14,6 +14,7 @@ export const GRAY = '#B1B1B1';
 export const LIGHTGRAY = '#F8F8F8';
 export const DARKGREEN = '#008A6B';
 export const LIGHTGREEN = '#50E3C2';
+export const RED = '#D0021B';
 
 export default StyleSheet.create({
   topNavigationPrimary: {

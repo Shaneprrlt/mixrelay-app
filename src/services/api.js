@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Config from '../config';
+import humps from 'humps';
 
 class Api {
   settings = {}
@@ -17,10 +18,33 @@ class Api {
     });
   }
 
+  // onboarding
+
+  checkUsername(username) {
+    return this.post('onboarding/check_username', {
+      username: username
+    })
+  }
+
   // Users
 
   createUser(userData={}) {
     return this.post('users', userData);
+  }
+
+  // Onboarding
+
+  sendVerificationCode(phoneNumber) {
+    return this.post('phone_verification/send_verification_code', {
+      phoneNumber: phoneNumber
+    })
+  }
+
+  verifyCode(phoneNumber, code) {
+    return this.post('phone_verification/verify_code', {
+      phoneNumber: phoneNumber,
+      code: code
+    })
   }
 
   // Private Methods
@@ -49,14 +73,14 @@ class Api {
         headers: this.headers(),
       };
       if(method.toLowerCase() !== 'get') {
-        options.data = data;
+        options.data = humps.decamelizeKeys(data);
       }
       axios(options)
         .then((response) => {
-          resolve(response.data);
+          resolve(humps.camelizeKeys(response.data));
         })
         .catch((error) => {
-          reject(error.response.data);
+          reject(humps.camelizeKeys(error.response.data));
         });
     });
   }
